@@ -43,11 +43,31 @@ describe("Login", () => {
     cy.get('[name="user-name"]').type("standard_user");
     cy.get('[name="login-button"]').click();
     cy.wait(100);
-    
+
     cy.get(".error-message-container")
-      .contains(
-        "h3",
-        "Epic sadface: Password is required")
+      .contains("h3", "Epic sadface: Password is required")
       .should("be.visible");
   });
+
+  it("Preencher apenas o campo de senha", () => {
+    cy.get('[data-test="password"]').type("secret_sauce");
+    cy.get('[name="login-button"]').click();
+    cy.wait(100);
+
+    cy.get(".error-message-container")
+      .contains("h3", "Epic sadface: Username is required")
+      .should("be.visible");
+  });
+
+    it("Clicar no botão de login sem preencher nenhum campo", () => {
+    cy.get('[name="login-button"]').click();
+    cy.wait(100);
+
+    cy.get(".error-message-container")
+      .contains("h3", "Epic sadface: Username is required")
+      .should("be.visible");
+  });
+  
+
 });
+
